@@ -757,6 +757,8 @@ function Shorts() {
 
     useEffect(() => {
         isMountedRef.current = true;
+        const currentQueue = queueRef.current;
+        const scrollContainer = scrollContainerRef.current;
         return () => {
             isMountedRef.current = false;
             shortsSessionCache = {
@@ -764,11 +766,11 @@ function Shorts() {
                 activeIndex: activeIndexRef.current,
                 subscribeStates,
                 reactions,
-                queue: queueRef.current,
+                queue: currentQueue,
                 queueIndex: queueIndexRef.current,
                 pageToken: pageTokenRef.current,
                 feedEnded,
-                scrollTop: scrollContainerRef.current?.scrollTop || 0,
+                scrollTop: scrollContainer?.scrollTop || 0,
             };
             if (retryTimeoutRef.current) { clearTimeout(retryTimeoutRef.current); retryTimeoutRef.current = null; }
         };
@@ -885,7 +887,7 @@ function Shorts() {
 
     return (
         <div className="-mx-4">
-            <div ref={scrollContainerRef} className="h-[calc(100vh-4rem)] overflow-y-scroll snap-y snap-mandatory">
+            <div ref={scrollContainerRef} className="h-[calc(100vh-4rem)] overflow-y-scroll snap-y snap-mandatory no-scrollbar">
                 {videos.map((video, index) => (
                     <div key={video.id} ref={(node) => registerCardRef(node, index)}>
                         <ShortCard

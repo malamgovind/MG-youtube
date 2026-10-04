@@ -11,7 +11,6 @@ function Search() {
     const [loading, setLoading] = useState(false);
     const [loadingMore, setLoadingMore] = useState(false);
     const [error, setError] = useState(null);
-    const [pageToken, setPageToken] = useState(null);
     const [hasMore, setHasMore] = useState(true);
 
     const loaderRef = useRef(null);
@@ -31,7 +30,6 @@ function Search() {
             setVideos([]);
             setLoading(false);
             setError(null);
-            setPageToken(null);
             setHasMore(false);
             pageTokenRef.current = null;
             seenIdsRef.current = new Set();
@@ -41,7 +39,6 @@ function Search() {
         setVideos([]);
         setLoading(true);
         setError(null);
-        setPageToken(null);
         setHasMore(true);
         pageTokenRef.current = null;
         seenIdsRef.current = new Set();
@@ -69,7 +66,6 @@ function Search() {
 
                     ids.forEach((id) => seenIdsRef.current.add(id));
                     pageTokenRef.current = token;
-                    setPageToken(token);
                     setHasMore(!!token);
 
                     if (ids.length === 0) {
@@ -143,7 +139,6 @@ function Search() {
 
                 newIds.forEach((id) => seenIdsRef.current.add(id));
                 pageTokenRef.current = token;
-                setPageToken(token);
                 setHasMore(!!token);
 
                 if (newIds.length === 0) return;
